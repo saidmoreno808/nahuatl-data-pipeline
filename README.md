@@ -2,14 +2,14 @@
 
 > **Arquitectura ETL de Producción** | Corpus Multilingüe (Náhuatl/Maya/Español) | Medallion Architecture | Data Quality Automation
 
-[![CI/CD Pipeline](https://github.com/said-moreno/corc-nah-enterprise/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/said-moreno/corc-nah-enterprise/actions)
-[![codecov](https://codecov.io/gh/said-moreno/corc-nah-enterprise/branch/main/graph/badge.svg)](https://codecov.io/gh/said-moreno/corc-nah-enterprise)
+[![CI/CD Pipeline](https://github.com/saidmoreno808/corc-nah-enterprise/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/saidmoreno808/corc-nah-enterprise/actions)
+[![codecov](https://codecov.io/gh/saidmoreno808/corc-nah-enterprise/branch/main/graph/badge.svg)](https://codecov.io/gh/saidmoreno808/corc-nah-enterprise)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11-blue.svg)](https://www.python.org/downloads/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Great Expectations](https://img.shields.io/badge/data%20quality-Great%20Expectations-green.svg)](https://greatexpectations.io/)
 [![Tests](https://img.shields.io/badge/tests-116%20passing-brightgreen.svg)](tests/)
-[![Last Commit](https://img.shields.io/github/last-commit/said-moreno/corc-nah-enterprise)](https://github.com/said-moreno/corc-nah-enterprise/commits/main)
+[![Last Commit](https://img.shields.io/github/last-commit/saidmoreno808/corc-nah-enterprise)](https://github.com/saidmoreno808/corc-nah-enterprise/commits/main)
 
 ---
 
@@ -46,7 +46,7 @@ docker --version
 ### Instalación Express
 ```bash
 # 1. Clonar repositorio
-git clone https://github.com/said-moreno/corc-nah-enterprise.git
+git clone https://github.com/saidmoreno808/corc-nah-enterprise.git
 cd corc-nah-enterprise
 
 # 2. Setup automático (crea venv + instala deps)
