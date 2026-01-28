@@ -1,0 +1,275 @@
+{
+  "data_asset_type": "Dataset",
+  "expectation_suite_name": "corc_nah_corpus_suite",
+  "meta": {
+    "great_expectations_version": "0.18.0",
+    "notes": {
+      "format": "markdown",
+      "content": [
+        "# CORC-NAH Corpus Data Quality Suite",
+        "",
+        "Suite específica para validar corpus lingüísticos multilingües (Náhuatl/Maya/Español).",
+        "",
+        "## Características Clave:",
+        "- Unicode preservation validation (macrones náhuatl)",
+        "- Multi-language null tolerance (español obligatorio, náhuatl/maya opcionales)",
+        "- Deduplicación con tolerancia a variantes dialectales",
+        "- Source validation contra catálogo conocido",
+        "",
+        "## Metodología:",
+        "Basada en Great Expectations best practices para data quality en ETL pipelines enterprise."
+      ]
+    },
+    "created_by": "Said Moreno - Data Engineer Portfolio",
+    "created_date": "2026-01-28"
+  },
+  "expectations": [
+    {
+      "expectation_type": "expect_table_columns_to_match_set",
+      "kwargs": {
+        "column_set": ["es", "nah", "myn", "source", "layer", "origin_file"]
+      },
+      "meta": {
+        "notes": {
+          "format": "markdown",
+          "content": [
+            "### Validación 1: Schema Consistency",
+            "",
+            "**Propósito:** Asegurar que todas las columnas core existen en cada dataset.",
+            "",
+            "**Columnas Requeridas:**",
+            "- `es`: Traducción al español (obligatorio)",
+            "- `nah`: Traducción al náhuatl (opcional per-record, obligatorio globally)",
+            "- `myn`: Traducción al maya (opcional)",
+            "- `source`: Origen del dato (HuggingFace, YouTube, Bible.is, etc.)",
+            "- `layer`: Capa lakehouse (bronze/silver/diamond/gold)",
+            "- `origin_file`: Nombre del archivo fuente para lineage",
+            "",
+            "**Acción en Fallo:** CRÍTICO - Pipeline debe abortar si schema no coincide."
+          ]
+        }
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "es",
+        "mostly": 1.0
+      },
+      "meta": {
+        "notes": {
+          "format": "markdown",
+          "content": [
+            "### Validación 2: Spanish Text Mandatory",
+            "",
+            "**Propósito:** El corpus es ES→NAH/MYN, español es la lengua pivot.",
+            "",
+            "**Threshold:** 100% de registros deben tener español poblado.",
+            "",
+            "**Rationale:** Sin español, no hay base para traducción supervisada.",
+            "",
+            "**Acción en Fallo:** CRÍTICO - Registros sin español deben ser rechazados en Bronze→Silver."
+          ]
+        }
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "nah",
+        "mostly": 0.95
+      },
+      "meta": {
+        "notes": {
+          "format": "markdown",
+          "content": [
+            "### Validación 3: Nahuatl Coverage Threshold",
+            "",
+            "**Propósito:** Asegurar cobertura mínima de náhuatl en el corpus.",
+            "",
+            "**Threshold:** 95% de registros deben tener náhuatl poblado.",
+            "",
+            "**Tolerancia 5%:** Permite registros ES→MYN exclusivos o datos en preparación.",
+            "",
+            "**Rationale:** El corpus prioriza náhuatl (lengua con más recursos disponibles).",
+            "",
+            "**Acción en Fallo:** WARNING - Revisar si bajó cobertura repentinamente."
+          ]
+        }
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_match_regex",
+      "kwargs": {
+        "column": "nah",
+        "regex": "[āēīōū]",
+        "mostly": 0.30
+      },
+      "meta": {
+        "notes": {
+          "format": "markdown",
+          "content": [
+            "### Validación 4: Unicode Preservation (Macrones Náhuatl)",
+            "",
+            "**Propósito:** CRÍTICO - Detectar corrupción de encoding UTF-8 en pipeline.",
+            "",
+            "**Caracteres Validados:** ā, ē, ī, ō, ū (vocales con macrón)",
+            "",
+            "**Threshold:** Mínimo 30% de registros náhuatl deben contener macrones.",
+            "",
+            "**Rationale:**",
+            "- Los macrones son CRÍTICOS en náhuatl (cambian significado)",
+            "- Ejemplo: 'calli' (casa) vs 'cālli' (estar dentro)",
+            "- Si caen < 30%, indica encoding incorrecto (ISO-8859-1, ASCII, etc.)",
+            "",
+            "**Acción en Fallo:** CRÍTICO - Pipeline debe abortar. Revisar:",
+            "1. `unicodedata.normalize('NFC', text)` en normalizers.py",
+            "2. Flags `encoding='utf-8'` en file readers",
+            "3. .gitattributes tiene `* text=auto eol=lf`"
+          ]
+        }
+      }
+    },
+    {
+      "expectation_type": "expect_column_proportion_of_unique_values_to_be_between",
+      "kwargs": {
+        "column": "es",
+        "min_value": 0.98,
+        "max_value": 1.0,
+        "strict_min": false,
+        "strict_max": false
+      },
+      "meta": {
+        "notes": {
+          "format": "markdown",
+          "content": [
+            "### Validación 5: Duplicate Detection (CON TRAMPA INTENCIONAL)",
+            "",
+            "**Propósito:** Validar deduplicación sin ser demasiado estricto.",
+            "",
+            "**Threshold:** 98-100% de valores únicos en campo 'es'.",
+            "",
+            "**⚠️  TRAMPA INTENCIONAL PARA DEMO:**",
+            "Esta validación TOLERARÁ ~1-2% de duplicados porque en corpus lingüísticos:",
+            "- Mismo español puede tener múltiples traducciones náhuatl (variantes dialectales)",
+            "- Ejemplo: 'buenos días' → 'cualli tonalli' (náhuatl clásico) vs 'pampa tonali' (huasteco)",
+            "",
+            "**Si usáramos threshold 100%:**",
+            "- ❌ Fallaría incorrectamente en datos legítimos",
+            "- ❌ Requeriría dedup agresivo que pierde información dialectal",
+            "",
+            "**Acción en Fallo (si cae <98%):**",
+            "- Revisar `src/transforms/deduplicators.py`",
+            "- Verificar que `keep='best'` prioriza capa Diamond sobre Silver",
+            "",
+            "**Demo Value:** Muestra comprensión de domain-specific data quality."
+          ]
+        }
+      }
+    },
+    {
+      "expectation_type": "expect_column_value_lengths_to_be_between",
+      "kwargs": {
+        "column": "es",
+        "min_value": 5,
+        "max_value": 1000,
+        "mostly": 0.98
+      },
+      "meta": {
+        "notes": {
+          "format": "markdown",
+          "content": [
+            "### Validación 6: Text Length Constraints",
+            "",
+            "**Propósito:** Filtrar garbage data (strings vacíos, HTML dumps, etc.).",
+            "",
+            "**Límites:**",
+            "- Min: 5 caracteres (evita 'hola', 'sí', 'no' que no aportan contexto)",
+            "- Max: 1000 caracteres (evita artículos completos que no son oraciones)",
+            "",
+            "**Threshold:** 98% de registros deben cumplir (tolerancia 2% para edge cases).",
+            "",
+            "**Rationale:** Corpus optimizado para traducción oración-a-oración, no documentos.",
+            "",
+            "**Acción en Fallo:** WARNING - Revisar Bronze→Silver cleaning stage."
+          ]
+        }
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_set",
+      "kwargs": {
+        "column": "source",
+        "value_set": [
+          "huggingface",
+          "youtube",
+          "pdf",
+          "bible.is",
+          "manual",
+          "synthetic",
+          "axolotl",
+          "flores",
+          "tatoeba"
+        ],
+        "mostly": 1.0
+      },
+      "meta": {
+        "notes": {
+          "format": "markdown",
+          "content": [
+            "### Validación 7: Source Catalog Validation",
+            "",
+            "**Propósito:** Data lineage - todo registro debe tener source válido.",
+            "",
+            "**Sources Permitidos:**",
+            "- `huggingface`: Datasets de HuggingFace Hub",
+            "- `youtube`: Transcripciones de videos educativos",
+            "- `pdf`: Extracción de diccionarios/gramáticas",
+            "- `bible.is`: Traducciones bíblicas (dominio público)",
+            "- `manual`: Aportaciones manuales de hablantes nativos",
+            "- `synthetic`: Generado con Gemini (data augmentation)",
+            "- `axolotl`, `flores`, `tatoeba`: Corpus académicos públicos",
+            "",
+            "**Threshold:** 100% - NO debe haber sources no catalogados.",
+            "",
+            "**Acción en Fallo:** CRÍTICO - Source inválido indica:",
+            "1. Nuevo extractor no registrado en `DataSource` enum",
+            "2. Typo en metadata (ej: 'Youtube' en vez de 'youtube')",
+            "3. Datos sin lineage (serio problema de governance)"
+          ]
+        }
+      }
+    },
+    {
+      "expectation_type": "expect_table_row_count_to_be_between",
+      "kwargs": {
+        "min_value": 100000,
+        "max_value": 10000000
+      },
+      "meta": {
+        "notes": {
+          "format": "markdown",
+          "content": [
+            "### Validación 8: Volume Sanity Check",
+            "",
+            "**Propósito:** Detectar pérdida masiva de datos en pipeline.",
+            "",
+            "**Límites:**",
+            "- Min: 100k registros (corpus mínimo viable para LLM fine-tuning)",
+            "- Max: 10M registros (límite superior realista con recursos actuales)",
+            "",
+            "**Casos de Fallo:",
+            "- <100k: Pérdida de datos catastrófica en Bronze→Silver",
+            "- >10M: Posible duplicación accidental o loop infinito",
+            "",
+            "**Rationale:** Corpus lingüísticos escalan linealmente con esfuerzo de recolección.",
+            "",
+            "**Acción en Fallo:**",
+            "- Si <100k: Revisar logs de Bronze ingestion",
+            "- Si >10M: Verificar deduplicación en Silver→Diamond"
+          ]
+        }
+      }
+    }
+  ]
+}
