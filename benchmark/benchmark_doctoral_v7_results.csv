@@ -1,0 +1,47 @@
+es,ref,qwen_pred,gemini_pred,qwen_score,gemini_score,judgment
+El sol sale por el oriente y calienta la tierra.,In tonatiuh quiça in tlapcopa ehuatl ihuany quiyotl in tlalli.,"<think>
+Okay, the user wants me to translate ""El sol sale por el oriente y calienta la tierra."" into Classical Nahuatl. Let me start by breaking down the sentence.
+
+First, ""El sol"" is ""el sol"" in Spanish, which translates to ""tonatiuh"" in Nahuatl. ""Sale por el oriente"" means ""rises in the east."" The verb ""sale"" is ""xihuitl"" or ""xihuitl"" for ""to rise."" ""Oriente"" is ""tonatiuh"" or ""tonatiuh"" but maybe ""ton",In tōnatiuh tlapcopa quīza īhuān quitōtōnia in tlālli.,1,5,"[Gemini] La traducción de Gemini es perfecta en términos de gramática clásica (uso correcto de macrones, sintaxis y el verbo transitivo 'tōtōnia' con su respectivo prefijo de objeto 'qui-'). Qwen no completó la traducción y mostró errores léxicos graves en su proceso de pensamiento (confundiendo 'xihuitl' con salir). La Referencia Oro proporcionada es de baja calidad lingüística ('ehuatl ihuany quiyotl' es una construcción inexistente o corrupta), mientras que Gemini se mantuvo fiel a las fuentes académicas (Carochi/Karttunen)."
+Los niños juegan en el río con alegría.,In pipiltzitzintin mahuiltiah in atoyac ica paquiliztli.,"<think>
+Okay, the user wants me to translate ""Los niños juegan en el río con alegría."" into Classical Nahuatl. Let me start by breaking down the sentence.
+
+First, ""Los niños"" is ""the children."" In Classical Nahuatl, ""niños"" is typically ""tlacuachtiliztli"" or ""tlacuachtiliztli."" Wait, maybe ""tlacuachtiliztli"" is more specific. Alternatively, ""tlacuachtiliztli"" is a noun, but maybe ""tlacuachtiliztli""",In pipiltin paquiliztica momahuiltiah atoyac.,1,5,"[Gemini] La traducción A (Qwen) está incompleta y no proporciona un resultado final. La traducción B (Gemini) es excelente: utiliza correctamente el prefijo reflexivo 'mo-' para el verbo 'ahuiltia' (necesario en náhuatl clásico), emplea el sufijo adverbial '-tica' (paquiliztica) en lugar de la construcción analítica 'ica' (más cercana al español), y respeta la naturaleza locativa de 'atoyac'."
+La sabiduría de los ancianos es como un tesoro escondido.,In tlamatiliztli in huehuetque quence cenca tlatlatiliztli.,"<think>
+Okay, the user wants me to translate ""La sabiduría de los ancianos es como un tesoro escondido"" into Classical Nahuatl. Let me start by breaking down the sentence.
+
+First, ""La sabiduría"" is ""wisdom."" In Classical Nahuatl, wisdom is often translated as ""tlatzotzontli"" or ""tlatzotzontli."" I think ""tlatzotzontli"" is the correct term here. 
+
+Next, ""de los ancianos."" ""Ancianos"" means elders or old people. The",In intlamatiliz in huehuetqueh iuhquinma tlatlatilli tlatquiotl.,1,5,"[Gemini] La traducción de Qwen está incompleta, se corta en el proceso de pensamiento y propone 'tlatzotzontli' (acción de tocar música) en lugar de 'tlamatiliztli' (sabiduría). Gemini ofrece una construcción perfecta en Náhuatl Clásico: utiliza correctamente el poseedor plural 'in intlamatiliz', el comparativo 'iuhquinma' y el término académico 'tlatquiotl' para tesoro/bienes."
+Debemos proteger nuestra lengua y nuestra cultura.,Ticpiyazque in totlahtol ihuan totlamatiliz.,"<think>
+Okay, the user wants me to translate ""Debemos proteger nuestra lengua y nuestra cultura."" into Classical Nahuatl. Let me start by breaking down the sentence.
+
+First, ""Debemos proteger"" – the verb here is ""debemos"", which is ""we must"" or ""we should"". In Classical Nahuatl, the verb for ""must"" or ""should"" is usually ""nequi"" or ""nequiya"". So ""nequi"" would be the base form. Then ""proteger"" is ""to protect"", which in Nahuatl is ""tlahtol",Monequi ticmalhuizque totlahtol ihuan totlamatiliz.,1,5,"[Gemini] La traducción A (Qwen) es incompleta y solo muestra el proceso de pensamiento (chain-of-thought) sin entregar un resultado final. La traducción B (Gemini) es excelente: utiliza correctamente el verbo impersonal 'monequi' para expresar obligación (deber) y el verbo 'malhuia', que en el contexto clásico denota cuidar o proteger con esmero algo preciado, superando incluso a la referencia oro en precisión semántica."
+El guerrero águila defiende el templo con valentía.,In cuauhtlocelotl quipiya in teocalli ica tlapaliccayotl.,"<think>
+Okay, the user wants me to translate ""El guerrero águila defiende el templo con valentía."" into Classical Nahuatl. Let me start by breaking down the sentence.
+
+First, ""El guerrero águila"" – ""guerrero águila"" is a compound noun. In Nahuatl, ""guerrero"" is ""tlacatl"" or ""tlacatiliztli"", but ""guerrero águila"" is a specific term referring to an eagle warrior, which is ""cuauhtli"". So ""guerrero águila",In cuāuhtli oquichyotica quimānāhuiā in teōcalli.,3,3,Error en juicio
+"Madre tierra, danos tus frutos para vivir.","Tonantzin tlalli, xitechmaca mochipahuacayotl inic tinemizque.","<think>
+Okay, the user wants me to translate ""Madre tierra, danos tus frutos para vivir."" into Classical Nahuatl. Let me start by breaking down the sentence.
+
+First, ""Madre tierra"" – in Classical Nahuatl, ""madre"" is ""mehuacan"" or ""mehuacanin"". ""Tierra"" is ""tlalticpac"" or ""tlalticpacan"". So combining them, maybe ""Mehuacan tlalticpacan"" or ""Mehuacanin tlalticpacan"". I should","Tonantzin Tlalli, xitechmomaquili moxochicualhuan inic tinemizque.",3,3,Error en juicio
+El viento sopla fuerte entre las montañas de obsidiana.,In ehecatl chicahuac itztla in tztetepetl.,"<think>
+Okay, the user wants me to translate ""El viento sopla fuerte entre las montañas de obsidiana"" into Classical Nahuatl. Let me start by breaking down the sentence.
+
+First, ""El viento"" is ""the wind."" In Nahuatl, ""wind"" is ""ehecatl."" So that's straightforward.
+
+Next, ""sopla fuerte"" means ""blows strongly."" The verb ""soplar"" translates to ""sopla,"" but in Nahuatl, the verb for ""to blow"" is ""tlahtolli"" or maybe """,Chicāhuac ehēca in ehēcatl in itztetepētzalān.,3,3,Error en juicio
+Canta el cenzontle al amanecer sobre el nopal.,Cuica in centzontototl in tlahuizcalpan inipan nohpalli.,"<think>
+Okay, the user wants me to translate ""Canta el cenzontle al amanecer sobre el nopal."" into Classical Nahuatl. Let me start by breaking down the sentence.
+
+First, ""Canta"" is the verb ""to sing."" In Classical Nahuatl, the verb for singing is ""chichihua."" The subject here is ""el cenzontle,"" which is a bird, the cenzontle. The Nahuatl word for cenzontle is ""cenzontli."" So the verb needs to agree with the subject. Since ""cenzontli""",Cuica in centzontototl tlathuinahuac in ipan nohpalli.,3,3,Error en juicio
+La lluvia cae suavemente y bendice las milpas.,In qiahuitl piahua ihuan tlateochihua in milpan.,"<think>
+Okay, the user wants me to translate ""La lluvia cae suavemente y bendice las milpas."" into Classical Nahuatl. Let me start by breaking down the sentence.
+
+First, ""La lluvia"" is ""the rain."" In Classical Nahuatl, ""rain"" is ""tlatzontli."" So ""La lluvia"" would be ""Tlatzontli.""
+
+Next, ""cae suavemente"" means ""falls gently."" The verb ""to fall"" is ""tlahtolli"" or ""tlahtolli,"" but maybe ""tla",In quiyahuitl iyōlic huetzi auh quinteōchīhua in mīltin.,3,3,Error en juicio
+En el mercado de Tlatelolco se venden plumas preciosas.,In tianquizco Tlatelolco monamaca in quetzaliztli.,"<think>
+Okay, the user wants me to translate ""En el mercado de Tlatelolco se venden plumas preciosas."" into Classical Nahuatl. Let me start by breaking down the sentence.
+
+First, ""En el mercado de Tlatelolco"" – ""En el mercado"" is ""En el mercado"", which in Classical Nahuatl would be ""Tlachihualtli"" or ""Tlachihualtli"". Wait, ""mercado"" is ""tlachihualtli"", so ""en el mercado"" would be ""Tlachihualtli"". But",Tlatelolco tianquizco monamaca in tlaçohihuitl.,3,3,Error en juicio

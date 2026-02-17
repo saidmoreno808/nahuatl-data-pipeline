@@ -2,14 +2,19 @@
 
 > **Arquitectura ETL de Producción** | Corpus Multilingüe (Náhuatl/Maya/Español) | Medallion Architecture | Data Quality Automation
 
-[![CI/CD Pipeline](https://github.com/saidmoreno808/corc-nah-enterprise/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/saidmoreno808/corc-nah-enterprise/actions)
-[![codecov](https://codecov.io/gh/saidmoreno808/corc-nah-enterprise/branch/main/graph/badge.svg)](https://codecov.io/gh/saidmoreno808/corc-nah-enterprise)
+[![CI/CD Pipeline](https://github.com/saidmoreno808/nahuatl-data-pipeline/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/saidmoreno808/nahuatl-data-pipeline/actions)
+[![codecov](https://codecov.io/gh/saidmoreno808/nahuatl-data-pipeline/branch/main/graph/badge.svg)](https://codecov.io/gh/saidmoreno808/nahuatl-data-pipeline)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11-blue.svg)](https://www.python.org/downloads/)
+[![Scala 2.12](https://img.shields.io/badge/scala-2.12-red.svg)](https://www.scala-lang.org/)
+[![Apache Spark](https://img.shields.io/badge/Spark-3.5.0-orange.svg)](https://spark.apache.org/)
+[![Airflow](https://img.shields.io/badge/Airflow-2.8.0-017CEE.svg)](https://airflow.apache.org/)
+[![Terraform](https://img.shields.io/badge/IaC-Terraform-7B42BC.svg)](https://www.terraform.io/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Great Expectations](https://img.shields.io/badge/data%20quality-Great%20Expectations-green.svg)](https://greatexpectations.io/)
 [![Tests](https://img.shields.io/badge/tests-116%20passing-brightgreen.svg)](tests/)
-[![Last Commit](https://img.shields.io/github/last-commit/saidmoreno808/corc-nah-enterprise)](https://github.com/saidmoreno808/corc-nah-enterprise/commits/main)
+[![Last Commit](https://img.shields.io/github/last-commit/saidmoreno808/nahuatl-data-pipeline)](https://github.com/saidmoreno808/nahuatl-data-pipeline/commits/main)
+
 
 ---
 
@@ -22,13 +27,19 @@ Este repositorio demuestra competencias técnicas para **Data Engineer** en ento
 | **ETL Modular** | Arquitectura Bronze/Silver/Diamond/Gold con separation of concerns | [`src/pipeline/`](src/pipeline/), 116 tests ✅ |
 | **Data Quality** | Great Expectations (8 validaciones corpus-specific) | [`great_expectations/`](great_expectations/) |
 | **CI/CD** | GitHub Actions multi-version + Jenkins declarativo | [`.github/workflows/ci.yml`](.github/workflows/ci.yml) |
-| **Orquestación** | Control-M simulation + Makefile automation | [`Jenkinsfile`](Jenkinsfile), [ADR 004](docs/adr/004-orchestration-control-m-vs-airflow.md) |
+| **Orquestación** | Apache Airflow DAGs + Jenkinsfile automation | [`airflow_dags/`](airflow_dags/), [Jenkinsfile](Jenkinsfile) |
 | **SQL Analítico** | Metadata store con queries de lineage/quality | [`sql/queries/*.sql`](sql/queries/) |
 | **Observabilidad** | Structured logging (JSON) + metrics tracking | [`src/utils/logger.py`](src/utils/logger.py) |
 | **Testing** | Unit + Integration + Parity tests (>80% coverage) | [`tests/`](tests/) |
-| **Documentation** | ADRs documenting architectural decisions | [`docs/adr/`](docs/adr/) |
+| **Scala/Spark** | High-performance deduplication (2.5x faster than PySpark) | [`src/scala_examples/`](src/scala_examples/) |
+| **Enterprise DBs** | Oracle, Teradata, Generic JDBC connectors | [`src/connectors/`](src/connectors/) |
+| **IaC** | Terraform templates for AWS (S3, Glue, Athena) | [`terraform/`](terraform/) |
+| **Documentation** | ADRs documenting architectural decisions | [`docs/adr/`](docs/adr/), [ARCHITECTURE.md](ARCHITECTURE.md) |
 
-📌 **Creado para aplicar a:** Bluetab - Data Engineer Position (Enero 2026)
+📌 **Tecnologías:** Python, Scala, SQL, Terraform, Docker, Airflow, Great Expectations, pytest, Spark
+
+---
+
 
 ---
 
@@ -148,21 +159,10 @@ Este proyecto NO es un prototipo académico, es un **caso de estudio de Data Eng
 
 Este proyecto hace elecciones técnicas deliberadas, optimizando para **demo portfolio** vs **producción enterprise**:
 
-- Modern:  _kuali tonali_
-- Huasteca: _kuale tunal_
-
-Our deduplication uses:
-- Lowercase + strip whitespace
-- Composite keys: `es + nah + myn`
-- Layer prioritization: Diamond > Silver
-
-```python
-df['dedup_key'] = (
-    df['es'].str.lower().str.strip() + "_" +
-    df['nah'].fillna('').str.lower().str.strip()
-)
-df = df.drop_duplicates(subset='dedup_key', keep='last')  # Keep Diamond
-```
+- **SQLite over PostgreSQL:** Elimina dependencias externas en desarrollo; misma API que producción
+- **Pandas over full PySpark:** Corpus actual (<1M registros) no justifica overhead de cluster; Spark disponible para Diamond layer
+- **Local Docker over cloud deployment:** Demo reproducible en cualquier máquina; arquitectura AWS documentada en `terraform/`
+- **Deduplicación exacta + fuzzy MinHash LSH:** Balance entre velocidad (exact) y cobertura dialectal (fuzzy para variantes como _kuali tonali_ vs _kuale tunal_)
 
 ### 3. Data Quality Validation
 

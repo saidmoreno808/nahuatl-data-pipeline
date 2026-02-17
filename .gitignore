@@ -1,0 +1,301 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+.virtualenv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Logs
+*.log
+logs/
+pipeline.log
+harvester.log
+
+# Data (sensitive/large files)
+data/bronze/
+data/silver/
+data/diamond/
+data/gold/
+data/1500/
+data/modelo_nahuatl/
+data/nahuatl-dpo-kit/
+data/temp_shorts_subs/
+data/*.jsonl
+data/*.json
+
+# Except benchmark (small reference dataset)
+!benchmark/golden_*.jsonl
+!benchmark/golden_stats.json
+!benchmark/checksums.txt
+
+# Models (trained weights, not source code)
+/models/
+*.pth
+*.pt
+*.bin
+*.onnx
+*.pkl
+*.safetensors
+
+# Environment & Secrets (CRITICAL - never commit)
+.env
+.env.local
+*.env
+*.pem
+*.key
+*_credentials.json
+credentials/
+secrets/
+
+# Claude/AI assistant settings (local only)
+.claude/
+.gemini/
+.cursor/
+
+
+# Debug artifacts
+debug_log*.txt
+*.vtt
+
+# Large root-level data files
+bible_nhe_scraped.jsonl
+benchmark_results.csv
+sources.csv
+analysis_report.txt
+gold_standard_report.md
+curation_report.md
+
+# Model output files
+models_list*.txt
+clean_models.txt
+manual_paste.txt
+
+# Root-level working scripts (moved to scripts/ for production use)
+# These are one-off development/debug scripts, not part of the pipeline
+augment_data.py
+augment_studio.py
+audit_scraper.py
+check_ffmpeg.py
+clean_normalize.py
+data_pipeline.py
+debug_prompt.py
+debug_yt.py
+download_americasnlp.py
+download_axolotl.py
+evaluate_model.py
+fix_gold_filter.py
+fix_notebook.py
+fuse_data.py
+fuse_data_v2.py
+generate_diamond_dataset.py
+ingest_data.py
+ingest_manual_data.py
+inspect_dict.py
+inspect_legacy.py
+inspect_parquet_deep.py
+list_models.py
+list_models_v2.py
+main.py
+prepare_dpo_dataset.py
+prepare_kaggle_dataset.py
+print_models_clean.py
+probe_bibleis.py
+probe_index.py
+probe_url.py
+process_dictionary.py
+read_api.py
+read_init.py
+rigorous_evaluation.py
+run_gold.py
+run_pipeline_test.py
+run_silver.py
+scrape_bible_nhe.py
+scrape_playlist.py
+scrape_shorts.py
+scrape_youtube.py
+setup_tpu_vm.sh
+test_canary.py
+test_model.py
+test_perplexity.py
+train_canary.py
+train_dpo.py
+train_gemma_t4.py
+train_mlm.py
+train_sota_t4.py
+train_unsloth.py
+
+# Documentation builds
+docs/_build/
+docs/_static/
+docs/_templates/
+
+# Coverage reports
+.coverage.*
+coverage.xml
+*.cover
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Docker
+*.log
+docker-compose.override.yml
+
+# Great Expectations
+uncommitted/
+.ge_store_backend_id
+
+# SQLite
+*.db
+*.sqlite
+*.sqlite3
+
+# Except metrics DB schema
+!sql/schema.sql
+
+# Archives
+*.zip
+*.tar
+*.gz
+*.7z
+*.rar
+
+# ─── Project-specific exclusions ───────────────────────────────────────────
+# Model checkpoints (large binary weights, not source code)
+nawatl_qwen3_checkpoint_800/
+
+# Root-level DPO datasets (large JSONL, stored in HuggingFace)
+dpo_full_*.jsonl
+dpo_trl_*.jsonl
+
+# DPO dataset directories (raw output, not source code)
+DPO/
+
+# Windows artifact
+nul
+
+# Working logs and debug artifacts
+consolidation_log.txt
+debug_output.txt
+inspect_output.txt
+dpo_analysis_report.txt
+
+# Personal Kaggle working guides (not part of the codebase)
+KAGGLE_*.md
+GUIA_*.md
+BENCHMARK_KAGGLE_GUIDE.md
+QUICK_START_KAGGLE.txt
+ORCHESTRATION_GUIDE.md
+
+# Intermediate task/run artifacts from AI generation
+nahuatl_dpo_generation*.json
+*.run.json
+*.task.json
+
+# Intermediate working stats (not versioned artifacts)
+stats_*.json
+
+# Session summary docs (personal notes, not portfolio artifacts)
+DAY_0_SUMMARY.md
+PHASE1_COMPLETE.md
+WEEK1_PHASE1_SUMMARY.md
+NEXT_STEPS.md
+README_NEW_HERO.md
+CONSOLIDAR_RESULTADOS_DPO.md
+KAGGLE_*.md
+
+# Operational one-off scripts at root level (not core pipeline)
+CONFIGURE_API_KEY.py
+consolidate_dpo_datasets.py
+consolidate_dpo_results.py
+count_dpo.py
+create_balanced_dataset.py
+debug_dedup.py
+diagnostic_code.py
+diagnostic_gemini_test.py
+inspect_kaggle_entity.py
+kaggle_aggressive_dpo.py
+kaggle_consolidate_and_download.py
+kaggle_mcp_server.py
+run_dpo_orchestration.py
+setup_kaggle_mcp.py
+test_kaggle_mcp.py
+orchestrate_hybrid_dpo.py
+analyze_dpo_dataset.py
+analyze_dpo_datasets.py
+checkpoint_resume_from_hf.py
+checkpoint_split_download.py
+checkpoint_upload_hf.py
+
+# PDFs (large documents)
+*.pdf
+
+# Except documentation PDFs
+!docs/**/*.pdf
+
+# Parquet files
+*.parquet
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Python cache
+*.pyc
+__pycache__/

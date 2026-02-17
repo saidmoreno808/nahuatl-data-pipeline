@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-02-13T22:42:32.891883",
+  "train_original": 70235,
+  "train_duplicados_eliminados": 10176,
+  "train_consolidated": 60059,
+  "dpo_total_loaded": 7935,
+  "dpo_unified_unique": 7928,
+  "dpo_nuevos_para_sft": 0,
+  "nota": "Todos los pares DPO chosen ya existen en train. El valor de DPO esta en el campo rejected para entrenamiento DPO.",
+  "archivos_generados": {
+    "train_consolidado": "data\\train_consolidated_v3.parquet",
+    "dpo_unificado": "data\\dpo_unified.jsonl"
+  },
+  "dpo_datasets": {
+    "dpo_dataset_20260205_222948": 1098,
+    "dpo_dataset_20260209_214659": 2260,
+    "dpo_dataset_20260210_232422": 2273,
+    "dpo_dataset_20260213_192925": 2304
+  }
+}

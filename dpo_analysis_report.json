@@ -1,0 +1,64 @@
+{
+  "analysis_timestamp": "2026-02-05T16:36:49.652798",
+  "dataset_path": "dpo_dataset_20260205_222948\\dpo_full_20260205_222948.jsonl",
+  "statistics": {
+    "general": {
+      "total_entries": 1098,
+      "valid_entries": 1098,
+      "invalid_entries": 0,
+      "validity_rate": 100.0,
+      "total_issues": 0
+    },
+    "quality_scores": {
+      "chosen": {
+        "mean": 7.989981785063752,
+        "median": 8.0,
+        "std_dev": 0.3374117253619982,
+        "min": 2.0,
+        "max": 9.0,
+        "count": 1098
+      },
+      "rejected": {
+        "mean": 4.957194899817851,
+        "median": 5.0,
+        "std_dev": 0.3375445685032059,
+        "min": 1.0,
+        "max": 6.0,
+        "count": 1098
+      },
+      "differences": {
+        "mean": 3.0327868852459017,
+        "median": 3.0,
+        "std_dev": 0.29708347143237596,
+        "min": 1.0,
+        "max": 7.0,
+        "count": 1098
+      }
+    },
+    "text_lengths": {
+      "prompts": {
+        "mean": 106.4936247723133,
+        "median": 70.0,
+        "min": 36,
+        "max": 5443,
+        "count": 1098
+      },
+      "chosen": {
+        "mean": 85.89981785063752,
+        "median": 44.5,
+        "min": 4,
+        "max": 3960,
+        "count": 1098
+      },
+      "rejected": {
+        "mean": 81.35063752276866,
+        "median": 43.0,
+        "min": 2,
+        "max": 6309,
+        "count": 1098
+      }
+    },
+    "issues_by_type": {}
+  },
+  "issues": []
+}

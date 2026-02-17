@@ -1,0 +1,14 @@
+{
+  "model": "808Tecnologia/qwen3-4b-nawatl-v5-checkpoints/checkpoint-13170",
+  "test_size": 1000,
+  "chrf": 3.4013605442176873,
+  "bleu": 33.972883504218416,
+  "avg_length_prediction": 79.695,
+  "avg_length_reference": 82.152,
+  "length_ratio": 0.9700920245398772,
+  "config": {
+    "max_new_tokens": 256,
+    "temperature": 0.7,
+    "top_p": 0.9
+  }
+}
