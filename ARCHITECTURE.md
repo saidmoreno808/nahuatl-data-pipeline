@@ -285,9 +285,9 @@ graph LR
 
 ### [ADR-004: Orchestration - Airflow vs Control-M](docs/adr/004-orchestration-control-m-vs-airflow.md)
 
-**Decision**: Airflow for portfolio + Jenkinsfile simulation
-- **Airflow**: Open-source, better for demo
-- **Control-M knowledge**: Documented via patterns, not actual deployment
+**Decisión**: Airflow como orquestador principal + Jenkinsfile para CI/CD
+- **Airflow**: open-source, DAGs declarativos, interfaz web integrada
+- **Control-M**: documentado via patrones equivalentes (ver ADR-004)
 
 ---
 

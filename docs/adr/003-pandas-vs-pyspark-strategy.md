@@ -244,7 +244,7 @@ merged = df_corpus.join(df_dict, df_corpus.nah == df_dict.lemma, "left")
 
 3. **No Aprovecha Cluster Si Disponible**
    - Si empresa ya tiene EMR/Databricks, infrautilizado con Pandas
-   - **Contraargumento:** Proyecto es portfolio demo, no producción enterprise
+   - **Contraargumento:** El corpus actual no justifica aún el overhead de un cluster completo
 
 ---
 

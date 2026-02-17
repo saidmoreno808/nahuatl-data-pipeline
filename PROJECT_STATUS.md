@@ -316,10 +316,9 @@ Same random seed ensures deterministic splits. Critical for ML comparisons.
 
 ## 📞 Contact & Feedback
 
-**Project Owner:** Said Moreno
-**Purpose:** Bluetab Data Engineer Application
-**Timeline:** 2 weeks (Jan 20 - Feb 3, 2026)
-**Status:** On track ✅
+**Autor:** Said Moreno
+**Inicio:** Enero 20, 2026
+**Estado:** En progreso ✅
 
 ---
 

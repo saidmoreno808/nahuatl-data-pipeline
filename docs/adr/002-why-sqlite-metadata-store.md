@@ -45,7 +45,7 @@ Este metadata es CRÍTICO para:
 - Pipeline metadata (runs, quality metrics, lineage)
 - Caching de resultados intermedios
 - Testing (in-memory DBs `:memory:`)
-- Demos/portfolios sin infraestructura
+- Proyectos locales sin infraestructura de base de datos dedicada
 
 ❌ **NO Apto Para:**
 - Producción con múltiples workers concurrentes (>1 escritor simultáneo)
@@ -159,9 +159,9 @@ def test_db():
    - Developer onboarding: `git clone && make install` → listo
    - CI/CD: 0 segundos setup (vs 30s Postgres container start)
 
-2. **Portabilidad para Demos**
-   - Recruiters técnicos pueden ejecutar pipeline localmente sin Docker/cloud
-   - `.db` file es reproducible bit-a-bit
+2. **Portabilidad**
+   - El pipeline se puede ejecutar localmente sin Docker ni cloud
+   - El archivo `.db` es reproducible bit a bit
 
 3. **Debugging Simplificado**
    - `sqlite3 logs/metadata.db` en cualquier máquina (incluso sin Python)

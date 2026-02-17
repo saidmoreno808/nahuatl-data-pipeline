@@ -272,18 +272,15 @@ Si ambos modelos funcionan bien:
 
 ---
 
-## 🎓 Recomendaciones Finales
+## Recomendaciones Finales
 
-### Para tu Portfolio de Data Engineering
+### Selección de modelo
 
-**Incluye ambos modelos:**
-1. **Qwen3-32B:** Demuestra que puedes trabajar con modelos grandes y optimizaciones complejas
-2. **Qwen3-4B:** Demuestra pragmatismo y consciencia de cost/performance trade-offs
+**Comparativa final:**
+1. **Qwen3-32B:** máxima calidad, mayor costo de cómputo e inferencia
+2. **Qwen3-4B:** pragmático, latencia de inferencia 83% menor, >95% de la métrica CHRF del modelo grande
 
-**Narrative para entrevistas:**
-> "Inicié con Qwen3-32B para máxima calidad, pero tras análisis de ROI migré a 4B, reduciendo inference latency 83% y manteniendo >95% de la métrica CHRF. Esto permitió escalar el servicio de 6 a 35 requests/min con el mismo hardware."
-
-### Para Producción Inmediata
+### Para producción inmediata
 
 **Usa Qwen3-4B:**
 - Desarrollo más rápido
@@ -326,7 +323,7 @@ El **Qwen3-4B-Instruct-2507** es una opción excelente para tu proyecto CORC-NAH
 - ✅ Mismo tokenizer y pipeline de datos
 - ✅ Rendimiento comparable a modelos 72B en benchmarks
 
-Lo convierte en una **actualización estratégica** que mejora tanto tu pipeline de desarrollo como tu narrativa de portfolio.
+Lo convierte en una **actualización estratégica** que mejora el pipeline de desarrollo y reduce costos operativos.
 
 **Próximo paso sugerido:** Ejecutar Phase 1 Pilot (3h de Kaggle) y comparar CHRF scores.
 

@@ -4,7 +4,7 @@
 **Date:** 2026-01-28
 **Authors:** Said Moreno
 **Deciders:** Data Engineering Lead, DevOps Lead
-**Context:** Portfolio project para demostrar comprensión de orquestación enterprise
+**Contexto:** Pipeline de datos para corpus multilingüe con orquestación de múltiples etapas ETL
 
 ---
 
@@ -30,11 +30,11 @@ Los pipelines ETL enterprise requieren orquestación sofisticada:
 | **Jenkins** | 60% (CI/CD, no ETL primary) | Open Source (MIT) | Baja |
 
 **Problema:**
-- **Control-M es el estándar de facto en empresas como Bluetab** (consultora para banca/seguros)
-- Imposible demo real: licencia $50k, requiere instalación enterprise (servidor + agentes)
-- Airflow es viable para demo local, pero NO representa arquitectura cliente real
+- **Control-M es el estándar de facto en entornos enterprise** (banca, seguros, telecomunicaciones)
+- Imposible usar en local: licencia $50k, requiere instalación enterprise (servidor + agentes)
+- Airflow es viable en local, pero no representa arquitectura enterprise real
 
-**Objetivo ADR:** Documentar estrategia para demostrar conocimiento de Control-M **sin** instalar software propietario.
+**Objetivo ADR:** Documentar la estrategia de orquestación seleccionada y su relación con Control-M.
 
 ---
 
@@ -45,7 +45,7 @@ Los pipelines ETL enterprise requieren orquestación sofisticada:
 1. **Jenkinsfile como Representación de DAGs**
    - Implementar pipeline declarativo con stages, parallel blocks, dependencies
    - Demostrar comprensión de: retry logic, error handling, SLA monitoring
-   - ✅ **Ventaja:** Recruiters pueden ejecutar pipeline en GitHub Actions/Jenkins local
+   - ✅ **Ventaja:** el pipeline es ejecutable en GitHub Actions o Jenkins local sin software propietario
 
 2. **Control-M Schema Conceptual (JSON)**
    - Documentar en `docs/control-m-mapping.json` cómo traduciríamos Jenkinsfile → Control-M jobs
@@ -141,7 +141,7 @@ pipeline {
 - Jenkins `parallel` ↔ Control-M quantitative resources (limitar concurrencia)
 - Jenkins `post { failure }` ↔ Control-M `onFailure` actions
 
-**Conclusión:** Recruiter con experiencia Control-M verá el Jenkinsfile y entenderá que comprendo dependency management.
+**Conclusión:** El mapeo Jenkinsfile ↔ Control-M deja claro que los conceptos de dependency management se entienden independientemente de la herramienta.
 
 #### 2. Ejecución Real (No Mock)
 
@@ -165,7 +165,7 @@ git push origin main
 # 3. Instalación: 2 semanas (DBA + sysadmin)
 ```
 
-**Ventaja Jenkinsfile:** Recruiter puede clonar repo y ver pipeline funcionando en 5 minutos.
+**Ventaja Jenkinsfile:** cualquier colaborador puede clonar el repo y ver el pipeline funcionando en 5 minutos.
 
 #### 3. Error Handling Demostrable
 
@@ -226,26 +226,21 @@ docker-compose up -d  # ← 4 GB RAM, 5 containers
 
 #### 2. No Representa Arquitectura Cliente Real
 
-**Realidad en Bluetab/clientes enterprise:**
+**Realidad en entornos enterprise:**
 
 ```
 Cliente Banco → Control-M (instalado hace 10 años, 5000 jobs)
 │
-├─ Option 1: Nuevo pipeline en Control-M (estándar empresa)
+├─ Opción 1: Nuevo pipeline en Control-M (estándar empresa)
 │   Pros: Integración nativa con sistemas existentes
 │   Cons: Interfaz legacy (desktop app, no web)
 │
-└─ Option 2: Proponer migración a Airflow (rarisimo)
+└─ Opción 2: Proponer migración a Airflow (inusual)
     Pros: UI moderna, open source
     Cons: Requiere aprobación C-level, migración de 5000 jobs
 ```
 
-**Estadística:**
-- 95% proyectos Bluetab usan **Control-M existente del cliente**
-- 4% usan Autosys
-- <1% pueden proponer Airflow (solo greenfield projects)
-
-**Conclusión:** Demostrar Airflow podría ser CONTRAPRODUCENTE si recruiter busca experiencia Control-M/Autosys.
+**Conclusión:** Control-M sigue siendo el estándar predominante en enterprise. Airflow es más común en proyectos greenfield o cloud-native.
 
 #### 3. Learning Curve Innecesaria
 
@@ -273,12 +268,12 @@ pipeline {
 }
 ```
 
-**Ambos demuestran:**
-- DAG definition
-- Dependency chaining
-- Bash command execution
+**Ambos cubren:**
+- Definición de DAG/pipeline
+- Encadenamiento de dependencias
+- Ejecución de comandos shell
 
-**Diferencia Real:** Airflow tiene UI web bonita, pero para portfolio **no agrega valor técnico** vs Jenkinsfile + documentación Control-M.
+**Diferencia práctica:** Airflow tiene UI web integrada; para este proyecto Jenkinsfile + documentación Control-M cubre los mismos requisitos funcionales.
 
 ---
 
@@ -585,10 +580,10 @@ Este archivo documenta cómo cada `stage` del Jenkinsfile se traduciría a un jo
 }
 ```
 
-**Valor de Este Archivo:**
-1. Recruiter de Bluetab lo lee y ve: "Candidato entiende inConditions, quantitative resources, SLA management"
-2. Mapeo directo Jenkinsfile ↔ Control-M demuestra que NO es conocimiento teórico
-3. Detalles como `rerunEvery: "10m"` o `MEMORY_64GB_NODE` resource muestran experiencia práctica
+**Propósito de este archivo:**
+1. Documenta la equivalencia entre conceptos Jenkinsfile y Control-M: `inConditions`, `quantitative resources`, `SLA management`
+2. El mapeo directo facilita la migración a Control-M si el entorno de producción lo requiere
+3. Detalles como `rerunEvery: "10m"` o `MEMORY_64GB_NODE` reflejan consideraciones reales de scheduling
 
 ---
 
@@ -596,21 +591,20 @@ Este archivo documenta cómo cada `stage` del Jenkinsfile se traduciría a un jo
 
 ### Positivas
 
-1. **Ejecutable Sin Licencias**
-   - Recruiter puede correr `docker run jenkins` y ver pipeline funcionando
+1. **Ejecutable sin licencias**
+   - `docker run jenkins` levanta el pipeline localmente
    - No depende de software propietario ($0 vs $50k Control-M)
 
-2. **Transferibilidad Demostrada**
-   - Jenkinsfile + Control-M mapping muestra: "Entiendo orquestación enterprise aunque no tenga acceso a Control-M"
-   - Applicable a Autosys, Tidal, otros orquestadores (mismos conceptos)
+2. **Transferibilidad**
+   - Jenkinsfile + Control-M mapping cubre los mismos conceptos: conditions, recursos, SLA
+   - Aplicable a Autosys, Tidal y otros orquestadores (conceptos equivalentes)
 
-3. **Lightweight Repo**
-   - Sin Docker Compose pesado de Airflow
-   - CI/CD corre en GitHub Actions (7 GB RAM) sin problemas
+3. **Repositorio liviano**
+   - Sin el overhead de Docker Compose completo de Airflow
+   - CI/CD corre en GitHub Actions sin requerimientos especiales de RAM
 
-4. **Honestidad Técnica**
-   - No "fake" experiencia con Control-M instalando Airflow y pretendiendo que es lo mismo
-   - ADR documenta explícitamente por qué no es posible demo real
+4. **Transparencia técnica**
+   - El ADR documenta explícitamente por qué no se usa Control-M en local y cómo se mapean sus conceptos
 
 ### Negativas
 
@@ -623,10 +617,9 @@ Este archivo documenta cómo cada `stage` del Jenkinsfile se traduciría a un jo
    - En Control-M/Airflow se puede re-ejecutar jobs individuales desde UI
    - Jenkinsfile requiere `--restart-from-stage` (menos intuitivo)
 
-3. **Podría Verse Como "No Tiene Experiencia Real Control-M"**
-   - Si recruiter busca experiencia práctica con Control-M UI
-   - **Contraargumento:** Nadie espera que candidato tenga licencia Control-M personal ($50k)
-   - Lo importante es demostrar comprensión de conceptos (dependency management, error handling, SLA)
+3. **Sin experiencia directa en la UI de Control-M**
+   - La interfaz de Control-M no está disponible sin licencia enterprise ($50k)
+   - Los conceptos subyacentes (dependency management, error handling, SLA) están documentados vía mapeo JSON
 
 ---
 
@@ -659,7 +652,7 @@ dags/corc_nah_pipeline.py   # ~200 líneas (más verboso que Jenkinsfile)
 = OOM risk
 ```
 
-**Conclusion:** Airflow sería excelente para proyecto con infraestructura cloud (ECS/EKS), pero para portfolio demo es overengineering.
+**Conclusión:** Airflow sería la opción natural si el proyecto tuviera infraestructura cloud dedicada (ECS/EKS); en el entorno actual Jenkinsfile cubre los requisitos con menor overhead operativo.
 
 ---
 
@@ -703,7 +696,7 @@ response = requests.post(
 
 | Escenario | Orchestrator | Rationale |
 |-----------|-------------|-----------|
-| **Portfolio Demo** | Jenkinsfile + Control-M docs | Ejecutable sin overhead |
+| **Proyecto local** | Jenkinsfile + Control-M docs | Ejecutable sin overhead |
 | **Cliente Banca/Seguros** | Control-M (existente) | No hay opción, es lo que tienen |
 | **Startup Tech** | Airflow | Standard en ecosistema Python/Data |
 | **Simple Batch Jobs** | Cron + systemd | No overengineer con orquestador |

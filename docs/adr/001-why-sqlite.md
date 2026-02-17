@@ -296,10 +296,9 @@ But SQLite is better for:
 - Wider ecosystem/tooling
 - More familiar to reviewers
 
-**Lessons for Bluetab Interview:**
+**Notas:**
 
-This ADR demonstrates:
-1. **Pragmatism:** Chose simplest solution, not most impressive
-2. **Trade-off Analysis:** Documented all options with honest pros/cons
-3. **Future-proofing:** Clear migration path to PostgreSQL
-4. **Cost Awareness:** $0 operational cost vs $15-30/month for RDS
+1. **Pragmatismo:** se eligió la solución más simple que resuelve el problema
+2. **Análisis de trade-offs:** todas las opciones documentadas con pros/contras
+3. **Ruta de migración clara:** hacia PostgreSQL cuando el volumen lo justifique
+4. **Costo operativo:** $0 en local vs $15-30/mes en RDS

@@ -158,26 +158,7 @@ corc_nah_colab_v2/
 - `src/` → Refactored, typed, tested code
 - Mirrors legacy behavior but with clean abstractions
 
-### 🎓 Documentation-Driven
-- `docs/adr/` → Explain WHY, not just WHAT
-- `src/spark_examples/` → Demonstrate understanding without deployment
-- SQL views → Show data warehouse knowledge
-
-## Critical Files for Bluetab Application
-
-1. **Technical Skills Showcase**
-   - `src/transforms/normalizers.py` → Unicode handling expertise
-   - `sql/schema.sql` → Data modeling
-   - `Jenkinsfile` → CI/CD understanding
-   - `src/spark_examples/compare_pandas_vs_spark.py` → Big Data awareness
-
-2. **Software Engineering Practices**
-   - `tests/integration/test_parity_with_legacy.py` → Regression testing
-   - `.github/workflows/ci.yml` → Automation
-   - `config/ge_suite.yaml` → Data quality
-   - `docs/adr/` → Decision documentation
-
-3. **Data Engineering Maturity**
-   - `data/` lakehouse structure (Bronze/Silver/Gold)
-   - `src/utils/db.py` → Metadata management
-   - `benchmark/generate_stats.py` → Observability
+### Documentación
+- `docs/adr/` → Decisiones de arquitectura con contexto y razonamiento
+- `src/scala_examples/` → Jobs Spark en Scala para operaciones intensivas
+- SQL views → Gestión de metadatos y linaje de datos
