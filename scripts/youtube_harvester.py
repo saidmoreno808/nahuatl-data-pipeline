@@ -194,30 +194,6 @@ class YoutubeHarvester:
                     logger.info(f"Deleted local temp file: {audio_path}")
                 except Exception as e:
                     logger.warning(f"Could not delete {audio_path}: {e}")
-    def run_pipeline(self, query: str, limit: int, output_file: str):
-        # 1. Download
-        self.search_and_download_audio(query, limit)
-        
-        # 2. Process Files
-        mp3_files = glob.glob(os.path.join(self.output_dir, "*.mp3"))
-        logger.info(f"Found {len(mp3_files)} audio files to process.")
-        
-        with open(output_file, 'a', encoding='utf-8') as f:
-            for audio_path in mp3_files:
-                data = self.transcribe_and_translate(audio_path)
-                if data:
-                    if isinstance(data, list):
-                        for item in data:
-                            item['source_file'] = os.path.basename(audio_path)
-                            f.write(json.dumps(item, ensure_ascii=False) + "\n")
-                    f.flush()
-                
-                # Cleanup local file after processing to save space
-                try:
-                    os.remove(audio_path)
-                    logger.info(f"Deleted local temp file: {audio_path}")
-                except Exception as e:
-                    logger.warning(f"Could not delete {audio_path}: {e}")
 
 def main():
     parser = argparse.ArgumentParser(description="YouTube Harvester (Audio -> Gemini)")

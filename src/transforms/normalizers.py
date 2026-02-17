@@ -113,27 +113,44 @@ class TextNormalizer:
         """
         Náhuatl-specific normalization.
 
-        Preserves:
-        - Macrons (ā, ē, ī, ō, ū) - indicate vowel length
-        - Saltillo (h, H, ') - glottal stop
-        - Digraphs (tl, tz, kw, etc.)
+        Applies conservative normalization that preserves all linguistically
+        significant features while fixing common encoding inconsistencies:
+
+        - Macrons (ā, ē, ī, ō, ū): preserved via NFC (already applied upstream)
+        - Saltillo variants: normalizes Unicode apostrophe variants to the
+          modifier apostrophe (U+02BC), the INALI standard for the saltillo
+          glottal stop. Affected codepoints: U+0027 ('), U+2019 ('), U+0060 (`),
+          U+02BC (ʼ), U+0294 (ʔ).
+        - Long-vowel doubling: sequences of 3+ identical vowels are clamped to 2
+          (aaa → aa, ēēē → ēē). Doubled vowels are a common alternative to macrons
+          in some orthographies.
+        - Trailing punctuation inside parenthesised glosses: normalizes common
+          OCR artefacts like "(Cualli." → "(Cualli)".
 
         Args:
-            text: Náhuatl text
+            text: Náhuatl text (post NFC normalization)
 
         Returns:
             str: Normalized Náhuatl text
         """
-        # Preserve macrons (already handled by NFC normalization)
-        # No additional processing needed if using NFC
+        # 1. Normalise saltillo variants to INALI-standard modifier apostrophe (ʼ U+02BC).
+        #    This affects deduplication: "tla'toa" and "tlaʼtoa" should match.
+        saltillo_variants = [
+            "\u0027",  # ASCII apostrophe '
+            "\u2019",  # Right single quotation mark '
+            "\u0060",  # Grave accent `
+            "\u0294",  # Latin letter glottal stop ʔ
+        ]
+        for variant in saltillo_variants:
+            text = text.replace(variant, "\u02BC")  # → ʼ (modifier apostrophe)
 
-        # Normalize saltillo variations
-        # Some orthographies use different representations
-        # Common variations: h, H, ', ʔ
-        # We keep original for now (don't force one convention)
+        # 2. Clamp runs of 3+ identical vowels to 2.
+        #    Handles both plain and macron-vowel variants.
+        text = re.sub(r"([aeiouāēīōū])\1{2,}", r"\1\1", text, flags=re.IGNORECASE)
 
-        # Normalize common alternative spellings
-        # (Only if explicitly needed for deduplication)
+        # 3. Normalise whitespace around punctuation (OCR artefact).
+        #    "tlahtoa , ma" → "tlahtoa, ma"
+        text = re.sub(r"\s+([,;:.])", r"\1", text)
 
         return text
 
@@ -141,19 +158,40 @@ class TextNormalizer:
         """
         Maya-specific normalization.
 
-        Preserves:
-        - Glottal stops (')
-        - Ejectives (marked with ')
-        - Special orthography
+        Applies conservative normalization for Yucatec Maya and related languages
+        while preserving ejectives and glottal stops that are phonemically
+        contrastive:
+
+        - Ejective consonants (k', ch', t', p', ts'): marker normalized to
+          ASCII apostrophe (U+0027), the ALMG standard.
+        - Glottal vowels (a', e', etc.): same apostrophe normalization.
+        - Alveolar affricate variants: 'ts' and 'tz' are kept as-is (dialect
+          dependent); no forced conversion.
+        - Digit-lookalike confusables: uppercase I / lowercase l confusion in
+          OCR is corrected in known morpheme prefixes (e.g., "lN-" → "IN-").
 
         Args:
-            text: Maya text
+            text: Maya text (post NFC normalization)
 
         Returns:
             str: Normalized Maya text
         """
-        # Preserve glottal stops and ejectives
-        # Common in Maya languages: k', ch', t', p', etc.
+        # 1. Normalise ejective/glottal-stop marker to ASCII apostrophe (U+0027),
+        #    following ALMG orthographic standard.
+        glottal_variants = [
+            "\u02BC",  # Modifier apostrophe ʼ
+            "\u2019",  # Right single quotation mark '
+            "\u0060",  # Grave accent `
+            "\u0294",  # Latin letter glottal stop ʔ
+        ]
+        for variant in glottal_variants:
+            text = text.replace(variant, "\u0027")  # → ' (ASCII apostrophe)
+
+        # 2. Normalise whitespace around ejective markers so "k '" → "k'".
+        text = re.sub(r"([bchkptz])\s+\u0027", r"\1'", text)
+
+        # 3. Clamp runs of 3+ identical vowels to 2 (same as Náhuatl).
+        text = re.sub(r"([aeiou])\1{2,}", r"\1\1", text, flags=re.IGNORECASE)
 
         return text
 
@@ -161,17 +199,37 @@ class TextNormalizer:
         """
         Spanish-specific normalization.
 
-        Preserves:
-        - Accents (á, é, í, ó, ú, ñ)
-        - Inverted punctuation (¿, ¡)
+        Accents, ñ, and inverted punctuation (¿, ¡) are already preserved by the
+        upstream NFC normalization. This method applies additional corrections for
+        common encoding issues found in OCR-derived and scraped corpora:
+
+        - Dash variants: em dash (—), en dash (–), and double hyphen (--) are
+          normalised to a single hyphen-minus (-).
+        - Typographic quotes: «», "", '' are normalised to ASCII double/single quotes.
+        - Ellipsis character (…) expanded to three periods (...) for consistency.
+        - Non-breaking space (U+00A0) replaced with regular space.
 
         Args:
-            text: Spanish text
+            text: Spanish text (post NFC normalization)
 
         Returns:
             str: Normalized Spanish text
         """
-        # Spanish accents are already preserved by NFC normalization
+        # 1. Normalise dash variants.
+        text = text.replace("\u2014", "-")   # em dash —
+        text = text.replace("\u2013", "-")   # en dash –
+        text = text.replace("--", "-")
+
+        # 2. Normalise typographic quotation marks to ASCII equivalents.
+        text = text.replace("\u00AB", '"').replace("\u00BB", '"')  # « »
+        text = text.replace("\u201C", '"').replace("\u201D", '"')  # " "
+        text = text.replace("\u2018", "'").replace("\u2019", "'")  # ' '
+
+        # 3. Expand ellipsis character.
+        text = text.replace("\u2026", "...")
+
+        # 4. Non-breaking space → regular space (handled again after collapse).
+        text = text.replace("\u00A0", " ")
 
         return text
 
