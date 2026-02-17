@@ -376,4 +376,4 @@ MIT — ver [LICENSE](LICENSE)
 ## Contacto
 
 **Said Moreno**
-LinkedIn: [said-moreno](https://linkedin.com/in/said-moreno)
+LinkedIn: [said-moreno](https://www.linkedin.com/in/said-moreno-aa1b82316)
