@@ -175,7 +175,6 @@ El corpus generado por este pipeline se usa para el fine-tuning del modelo Qwen3
 - **SFT** sobre 60,059 pares españo–náhuatl consolidados (deduplicados).
 - **DPO** con 7,928 pares de preferencia generados con Gemini 2.5 Flash como modelo maestro (score medio del chosen: 7.99/10).
 - **Evaluación:** BLEU 33.97 sobre 1,000 muestras de prueba. Resultados en [`benchmark_metrics_qwen3_4b_v5.json`](benchmark_metrics_qwen3_4b_v5.json).
-- **Modelo publicado:** [HuggingFace — 808Tecnologia](https://huggingface.co/808Tecnologia)
 
 Scripts de entrenamiento: [`entrenamiento_qwen3_4b_v5.py`](entrenamiento_qwen3_4b_v5.py), [`kaggle_dpo_script.py`](kaggle_dpo_script.py).
 
